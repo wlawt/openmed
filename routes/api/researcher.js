@@ -11,8 +11,8 @@ router.get("/", (req, res) => {
 });
 
 /*  @route      GET api/researcher/key
-    @desc       Retrieve key
-    @access     Private
+    @desc       Retrieve user key
+    @access     Private 
 */
 router.get("/key", (req, res) => {
   res.json({ msg: "researcher key" });
