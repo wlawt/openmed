@@ -1,0 +1,15 @@
+{
+  app: {
+    label: "openmed",
+    version: "0.0.0",
+    minVersion: "0.0.0",
+    protocolVersion: "1.1"
+  },
+  components: {
+    storage: {
+      database: "openmedb",
+      user: "openmed",
+      password: "password"
+    }
+  }
+}
