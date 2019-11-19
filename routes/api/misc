@@ -1,0 +1,41 @@
+{
+    "inputs": 
+		[
+			{
+                "owners_before": ["61rukbh9mSkQHXKZX2zZZDuPCL2sV472JVb2Ezd7i2vN"], 
+                "fulfills": null, 
+                "fulfillment": "pGSAIEqC3hRFc3GS7Q5MRi8BbBS6S5p-INsAfxtzDPPHZOxDgUCplB0j2-HengxF6MOEVW2X690Bjs3-hzdCuKpBeejRrmluRU1TZt4aoGpwJ_iXLYOtuu9XwVdLRZKvNU6gCagI"
+            }
+        ], 
+    "outputs": 
+        [
+            {
+                "public_keys": ["61rukbh9mSkQHXKZX2zZZDuPCL2sV472JVb2Ezd7i2vN"], 
+                "condition": {
+                    "details": {
+                        "type": "ed25519-sha-256", 
+                        "public_key": "61rukbh9mSkQHXKZX2zZZDuPCL2sV472JVb2Ezd7i2vN"
+                    },
+                    "uri": "ni:///sha-256;AKJlQO2R0EQ9Lqx4wfQlJcNVMO-nq0Pc7dKGdxHxO18?fpt=ed25519-sha-256&cost=131072"
+                }, 
+                "amount": "1"
+            }
+        ], 
+    "operation": "CREATE", 
+    "metadata": {
+        "type": "researcher"
+    }, 
+    "asset": {
+        "data": {
+            "firstName": "asdfaaa", 
+            "lastName": "asdf", 
+            "study": "asdf", 
+            "research": "asdf", 
+            "university": "asdf", 
+            "researchFirm": "adsf", 
+            "creds": "asdf"
+        }
+    }, 
+    "version": "2.0", 
+    "id": "c16f384e5d1ada8f534532be0a82e946512efb8b01a1cb9b77fd7340def4037f"
+}

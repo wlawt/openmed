@@ -4,7 +4,11 @@
   "description": "- Initial Commit",
   "main": "server.js",
   "dependencies": {
+    "axios": "^0.19.0",
+    "base-x": "^3.0.4",
     "bcryptjs": "^2.4.3",
+    "bigchaindb-driver": "^4.1.0",
+    "bip39": "^2.5.0",
     "body-parser": "^1.19.0",
     "concurrently": "^5.0.0",
     "express": "^4.17.1",

@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import store from "./store";
 
 // IMPORT COMPONENTS
+import Reseacher from "./components/forms/Researcher.jsx";
 
 import "./App.css";
 
@@ -15,7 +16,17 @@ class App extends Component {
         <Router>
           <div className="App">
             <div className="container">
-              <h1>Template</h1>
+              {/* 
+                Name
+                field of study
+                purpose research
+                academic institute
+                  canadian university 
+                research firms 
+                creds
+              */}
+
+              <Route exact path="/" component={Reseacher} />
             </div>
           </div>
         </Router>
