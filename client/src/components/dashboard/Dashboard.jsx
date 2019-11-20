@@ -70,11 +70,13 @@ class Dashboard extends Component {
 
 Dashboard.propTypes = {
   getPatients: PropTypes.func.isRequired,
-  dashboard: PropTypes.object.isRequired
+  dashboard: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  dashboard: state.dashboard
+  dashboard: state.dashboard,
+  auth: state.auth
 });
 
 export default connect(mapStateToProps, { getPatients })(Dashboard);

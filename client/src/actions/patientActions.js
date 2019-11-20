@@ -6,7 +6,7 @@ export const registerPatient = (patientData, history) => dispatch => {
   axios
     .post("/api/patient/register", patientData)
     .then(res => {
-      history.push("/");
+      history.push("/login");
     })
     .catch(err =>
       dispatch({

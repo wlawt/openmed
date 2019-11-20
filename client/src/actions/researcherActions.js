@@ -6,7 +6,7 @@ export const registerResearcher = (researcherData, history) => dispatch => {
   axios
     .post("/api/researcher/register", researcherData)
     .then(res => {
-      history.push("/");
+      history.push("/researcher");
     })
     .catch(err =>
       dispatch({

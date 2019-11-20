@@ -2,25 +2,12 @@ import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 
-import { GET_ERRORS, SET_CURRENT_USER } from "./types";
-
-// Register user
-export const registerUser = (userData, history) => dispatch => {
-  axios
-    .post("/api/users/register", userData)
-    .then(res => history.push("/login"))
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
-    );
-};
+import { GET_ERRORS, SET_CURRENT_USER, CLEAR_USER } from "./types";
 
 // Login - Get user token
-export const loginUser = userData => dispatch => {
+export const loginPatient = loginData => dispatch => {
   axios
-    .post("/api/users/login", userData)
+    .post("/api/patient/login", loginData)
     .then(res => {
       // Save to localStorage
       const { token } = res.data;
@@ -57,4 +44,11 @@ export const logoutUser = () => dispatch => {
   setAuthToken(false);
   // Set current user to empty object which will set isAutheticated to false
   dispatch(setCurrentUser({}));
+};
+
+// Clear user (goes with logout)
+export const clearCurrentUser = () => {
+  return {
+    type: CLEAR_USER
+  };
 };

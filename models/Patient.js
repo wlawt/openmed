@@ -61,6 +61,10 @@ const PatientSchema = new Schema({
   fulfillment: {
     type: String,
     required: true
+  },
+  wallet: {
+    type: Number,
+    default: 0
   }
 });
 

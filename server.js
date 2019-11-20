@@ -6,7 +6,6 @@ const path = require("path");
 
 // Insert API Routes below
 const auth = require("./routes/api/auth");
-const doctor = require("./routes/api/doctor");
 const patient = require("./routes/api/patient");
 const payment = require("./routes/api/payment");
 const researcher = require("./routes/api/researcher");
@@ -35,7 +34,6 @@ require("./config/passport")(passport); */
 
 // Insert Use Apps below
 app.use("/api/auth", auth);
-app.use("/api/doctor", doctor);
 app.use("/api/patient", patient);
 app.use("/api/payment", payment);
 app.use("/api/researcher", researcher);

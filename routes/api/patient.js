@@ -1,6 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const driver = require("bigchaindb-driver");
+const jwt = require("jsonwebtoken");
+const passport = require("passport");
+const keys = require("../../config/keys");
 
 // LOAD MODEL
 const Patient = require("../../models/Patient");
@@ -42,8 +45,8 @@ router.post("/register", (req, res) => {
   );
 
   const txSigned = driver.Transaction.signTransaction(tx, patient.privateKey);
-
   conn.postTransactionCommit(txSigned);
+
   console.log(patient.privateKey);
   console.log(txSigned.outputs[0].public_keys[0]);
   console.log(txSigned.id);
@@ -80,6 +83,34 @@ router.get("/all", (req, res) => {
       res.json(patients);
     })
     .catch(err => res.status(400).json({ patient: "No patients" }));
+});
+
+/*  @route      POST api/patient/key
+    @desc       Login patient
+    @access     Public
+*/
+router.post("/login", (req, res) => {
+  const id = req.body.id;
+  const private_key = req.body.private_key;
+
+  Patient.findOne({ id }).then(patient => {
+    if (id === patient.id && private_key === patient.private_key) {
+      const payload = {
+        id: patient.id,
+        firstName: patient.firstName,
+        private_key: patient.private_key
+      };
+
+      jwt.sign(payload, keys.secretOrKey, { expiresIn: 3600 }, (err, token) => {
+        res.json({
+          success: true,
+          token: "Bearer " + token
+        });
+      });
+    } else {
+      console.log("dont match");
+    }
+  });
 });
 
 /*  @route      GET api/patient/key
