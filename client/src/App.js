@@ -6,6 +6,9 @@ import store from "./store";
 
 // IMPORT COMPONENTS
 import Reseacher from "./components/forms/Researcher.jsx";
+import Patient from "./components/forms/Patient.jsx";
+import Dashboard from "./components/dashboard/Dashboard.jsx";
+import Navbar from "./components/layout/Navbar";
 
 import "./App.css";
 
@@ -15,6 +18,7 @@ class App extends Component {
       <Provider store={store}>
         <Router>
           <div className="App">
+            <Navbar />
             <div className="container">
               {/* 
                 Name
@@ -26,7 +30,9 @@ class App extends Component {
                 creds
               */}
 
-              <Route exact path="/" component={Reseacher} />
+              <Route exact path="/" component={Dashboard} />
+              <Route exact path="/researcher" component={Reseacher} />
+              <Route exact path="/patient" component={Patient} />
             </div>
           </div>
         </Router>

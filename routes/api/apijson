@@ -39,3 +39,19 @@
     "version": "2.0", 
     "id": "c16f384e5d1ada8f534532be0a82e946512efb8b01a1cb9b77fd7340def4037f"
 }
+
+
+
+
+
+
+{ condition: { 
+    details: { 
+        type: 'ed25519-sha-256',
+        public_key: 'kCwG32E3exYMZhoBfFZKdw3d5GKTHSKKAK7qmZMuo4Y' 
+    },
+     uri:
+      'ni:///sha-256;VwGvrHSWv0tZoy1ICoql7wAHJXfj6JkDEPDvLe_ZMX4?fpt=ed25519-sha-256&cost=131072' 
+    },
+    amount: '1',
+    public_keys: [ 'kCwG32E3exYMZhoBfFZKdw3d5GKTHSKKAK7qmZMuo4Y' ] }

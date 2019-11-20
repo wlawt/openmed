@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const driver = require("bigchaindb-driver");
-const axios = require("axios");
 
 // LOAD MODEL
 const Researcher = require("../../models/Researcher");
@@ -13,7 +12,7 @@ router.get("/", (req, res) => {
   res.json({ msg: "researcher working ..." });
 });
 
-/*  @route      GET api/researcher/register
+/*  @route      POPST api/researcher/register
     @desc       Register researher
     @access     Private 
 */
@@ -47,31 +46,41 @@ router.post("/register", (req, res) => {
     tx,
     researcher.privateKey
   );
+
   conn.postTransactionCommit(txSigned);
 
+  console.log(researcher.privateKey);
+  console.log(txSigned.outputs[0].public_keys[0]);
+  console.log(txSigned.id);
+  console.log(txSigned.inputs[0].fulfillment);
+
   //https://test.ipdb.io/api/v1/transactions/${txSigned.id}
-  axios
+  /*   axios
     .get(`https://test.ipdb.io/api/v1/transactions/${txSigned.id}`)
     .then(res => {
-      console.log(res.inputs);
+      console.log(res);
     })
     .catch(err => {
       console.log(err);
-    });
+    }); */
 
-  /* const newResearcher = new Researcher({
+  const newResearcher = new Researcher({
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     study: req.body.study,
     research: req.body.research,
     university: req.body.university,
     researchFirm: req.body.researchFirm,
-    creds: req.body.creds
+    creds: req.body.creds,
+    public_key: txSigned.outputs[0].public_keys[0],
+    private_key: researcher.privateKey,
+    id: txSigned.id,
+    fulfillment: txSigned.inputs[0].fulfillment
   });
 
   newResearcher.save().then(r => {
     res.json(r);
-  }); */
+  });
 });
 
 router.get("/all", (req, res) => {

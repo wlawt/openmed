@@ -33,6 +33,22 @@ const ResearcherSchema = new Schema({
   creds: {
     type: String,
     required: true
+  },
+  public_key: {
+    type: String,
+    required: true
+  },
+  private_key: {
+    type: String,
+    required: true
+  },
+  id: {
+    type: String,
+    required: true
+  },
+  fulfillment: {
+    type: String,
+    required: true
   }
 });
 
