@@ -11,7 +11,11 @@ import Dashboard from "./components/dashboard/Dashboard";
 import Navbar from "./components/layout/Navbar";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
+import RLogin from "./components/auth/RLogin";
 import AddPublication from "./components/payments/R_Form";
+import Wallet from "./components/payments/Wallet";
+import PaymentDashboard from "./components/payments/PaymentDashboard";
+import Publications from "./components/publications/Publication";
 
 import "./App.css";
 
@@ -74,7 +78,25 @@ class App extends Component {
               <Route exact path="/patient" component={Patient} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
-              <Route exact path="/add_publication" component={AddPublication} />
+              <Route exact path="/rlogin" component={RLogin} />
+              <Route exact path="/publication" component={Publications} />
+              <Switch>
+                <PrivateRoute
+                  exact
+                  path="/add_publication"
+                  component={AddPublication}
+                />
+              </Switch>
+              <Switch>
+                <PrivateRoute
+                  exact
+                  path="/payment_dashboard"
+                  component={PaymentDashboard}
+                />
+              </Switch>
+              <Switch>
+                <PrivateRoute exact path="/wallet" component={Wallet} />
+              </Switch>
             </div>
           </div>
         </Router>

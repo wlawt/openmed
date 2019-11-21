@@ -83,6 +83,34 @@ router.post("/register", (req, res) => {
   });
 });
 
+/*  @route      POST api/researcher/key
+    @desc       Login researcher
+    @access     Public
+*/
+router.post("/login", (req, res) => {
+  const id = req.body.id;
+  const private_key = req.body.private_key;
+
+  Researcher.findOne({ id }).then(researcher => {
+    if (id === researcher.id && private_key === researcher.private_key) {
+      const payload = {
+        id: researcher.id,
+        firstName: researcher.firstName,
+        private_key: researcher.private_key
+      };
+
+      jwt.sign(payload, keys.secretOrKey, { expiresIn: 3600 }, (err, token) => {
+        res.json({
+          success: true,
+          token: "Bearer " + token
+        });
+      });
+    } else {
+      console.log("dont match");
+    }
+  });
+});
+
 router.get("/all", (req, res) => {
   const errors = {};
 

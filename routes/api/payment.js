@@ -25,21 +25,74 @@ router.get("/", (req, res) => {
     5. researcher gets bonus for submitting paper onto the chain 
   */
 
+/*  @route      GET api/payment/all_pub
+    @desc       Retrieve all publications
+    @access     Private
+*/
+router.get("/all_pub", (req, res) => {
+  Publication.find()
+    .sort({ date: -1 })
+    .then(publication => {
+      res.json(publication);
+    })
+    .catch(err => res.status(400).json({ patient: "No publications" }));
+});
+
+/*  @route      GET api/payment/all
+    @desc       Retrieve all payment
+    @access     Private
+*/
+router.get("/all", (req, res) => {
+  Payment.find()
+    .sort({ date: -1 })
+    .then(payment => {
+      res.json(payment);
+    })
+    .catch(err => res.status(400).json({ patient: "No payments" }));
+});
+
 /*  @route      POST api/payment/add_publication
     @desc       Add to publicactions
     @access     Private
 */
-
-/*  @route      POST api/payment
-    @desc       Researcher -> patient
-    @access     Private
-*/
-router.post("/r2p", (req, res) => {
-  // TODO: retrieve p and r keys
-
-  // Establish connection to network
+router.post("/add_publication", (req, res) => {
+  const pub = new driver.Ed25519Keypair();
   const conn = new driver.Connection("https://test.ipdb.io/api/v1/");
 
+  const tx = driver.Transaction.makeCreateTransaction(
+    {
+      publication: req.body.publication,
+      institution: req.body.institution,
+      pkey: req.body.pkey,
+      rkey: req.body.rkey
+    }[
+      driver.Transaction.makeOutput(
+        driver.Transaction.makeEd25519Condition(pub.publicKey)
+      )
+    ],
+    pub.publicKey
+  );
+
+  // Sign
+  const txSigned = driver.Transaction.signTransaction(tx, pub.privateKey);
+
+  conn.postTransactionCommit(txSigned);
+
+  const newPublication = new Publication({
+    publication: req.body.publication,
+    institution: req.body.institution,
+    pkey: req.body.pkey,
+    rkey: req.body.rkey,
+    transaction: pub.id
+  });
+
+  newPublication.save().then(p => {
+    res.json(p);
+  });
+
+  /* 
+    Transfer funds
+  */
   const asset = {};
   const price = 1;
 
@@ -49,7 +102,7 @@ router.post("/r2p", (req, res) => {
 
     [
       driver.Transaction.makeOutput(
-        driver.Transaction.makeEd25519Condition(patient.publicKey)
+        driver.Transaction.makeEd25519Condition(req.body.pkey)
       )
     ],
 
@@ -59,7 +112,7 @@ router.post("/r2p", (req, res) => {
   // Researcher signs w/private key
   const txTransferResearchSigned = driver.Transaction.signTransaction(
     txTransferPatient,
-    researcher.privateKey
+    pub.privateKey
   );
 
   // Send over BigChain node
@@ -68,8 +121,8 @@ router.post("/r2p", (req, res) => {
   // Save to Mongodb
   const newPaymentToPatient = new Payment({
     asset_id: asset,
-    p_public_key: patient.publicKey,
-    r_public_key: researcher.publicKey
+    p_public_key: req.body.pkey,
+    r_public_key: req.body.rkey
   });
 
   newPaymentToPatient.save().then(np => {
@@ -78,7 +131,7 @@ router.post("/r2p", (req, res) => {
 
   // Add money to patient wallet
   Patient.updateOne(
-    { id: new ObjectID(patient.id) },
+    { id: new ObjectID(req.body.pid) },
     {
       $inc: {
         wallet: price
@@ -88,66 +141,10 @@ router.post("/r2p", (req, res) => {
 
   // Remove money from researcher wallet
   Researcher.updateOne(
-    { id: new ObjectID(researcher.id) },
+    { id: new ObjectID(req.body.rid) },
     {
       $inc: {
         wallet: price * -1
-      }
-    }
-  ).then(researcher => res.json(researcher));
-});
-
-/*  @route      POST api/payment
-    @desc       Chain -> researcher
-    @access     Private
-*/
-router.post("/c2r", (req, res) => {
-  // Establish connection to network
-  const conn = new driver.Connection("https://test.ipdb.io/api/v1/");
-
-  const asset = {
-    paper: "paper details"
-  };
-
-  const reward = {
-    reward: "1"
-  };
-
-  const txRewardResearcher = driver.Transaction.makeCreateTransaction(
-    asset,
-    reward,
-    [
-      driver.Transaction.makeOutput(
-        driver.Transaction.makeEd25519Condition(researcher.publicKey)
-      )
-    ],
-
-    researcher.publicKey
-  );
-
-  const txSigned = driver.Transaction.signTransaction(
-    txRewardResearcher,
-    researcher.privateKey
-  );
-  conn.postTransactionCommit(txSigned);
-
-  // Save
-  const newPaymentToResearcher = new Payment({
-    asset_id: asset,
-    fulfillment: fulfillment,
-    r_public_key: researcher.publicKey
-  });
-
-  newPaymentToResearcher.save().then(np => {
-    res.json(np);
-  });
-
-  // Add money to researcher wallet
-  Researcher.updateOne(
-    { id: new ObjectID(researcher.id) },
-    {
-      $inc: {
-        wallet: reward
       }
     }
   ).then(researcher => res.json(researcher));

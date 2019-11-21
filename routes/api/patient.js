@@ -101,7 +101,7 @@ router.post("/login", (req, res) => {
         private_key: patient.private_key
       };
 
-      jwt.sign(payload, keys.secretOrKey, { expiresIn: 3600 }, (err, token) => {
+      jwt.sign(payload, keys.secretOrKey, { expiresIn: 300 }, (err, token) => {
         res.json({
           success: true,
           token: "Bearer " + token

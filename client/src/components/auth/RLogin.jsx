@@ -7,13 +7,13 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
 import {
-  loginPatient,
+  loginResearcher,
   setAccountID,
   set_pkey,
   set_type
 } from "../../actions/authActions";
 
-class Login extends Component {
+class RLogin extends Component {
   constructor(props) {
     super(props);
 
@@ -52,9 +52,9 @@ class Login extends Component {
 
     this.props.setAccountID(loginData.id);
     this.props.set_pkey(loginData.private_key);
-    this.props.set_type("PATIENT");
+    this.props.set_type("RESEARCHER");
 
-    this.props.loginPatient(loginData);
+    this.props.loginResearcher(loginData);
   };
 
   render() {
@@ -62,7 +62,7 @@ class Login extends Component {
 
     return (
       <Fragment>
-        <h1 className="pt-5 mt-5">Patient - Login</h1>
+        <h1 className="pt-5 mt-5">Researcher - Login</h1>
 
         <Form onSubmit={this.onSubmit}>
           <Form.Group className="pt-3">
@@ -95,17 +95,17 @@ class Login extends Component {
           Don't have an account?
         </Link>
         <br />
-        <Link to="/rlogin" className="lead" style={{ textDecoration: "none" }}>
-          Not a patient? Login as a pesearcher.
+        <Link to="/login" className="lead" style={{ textDecoration: "none" }}>
+          Not a reseracher? Login as a patient.
         </Link>
       </Fragment>
     );
   }
 }
 
-Login.propTypes = {
+RLogin.propTypes = {
   auth: PropTypes.object.isRequired,
-  loginPatient: PropTypes.func.isRequired,
+  loginResearcher: PropTypes.func.isRequired,
   setAccountID: PropTypes.func.isRequired,
   set_pkey: PropTypes.func.isRequired,
   set_type: PropTypes.func.isRequired
@@ -116,8 +116,8 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, {
-  loginPatient,
+  loginResearcher,
   setAccountID,
   set_pkey,
   set_type
-})(Login);
+})(RLogin);

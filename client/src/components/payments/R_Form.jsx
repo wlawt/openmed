@@ -30,10 +30,12 @@ class R_Form extends Component {
     e.preventDefault();
 
     const publicationData = {
-      // r_key
-      // p_key
       publication: this.state.publication,
-      institution: this.state.institution
+      institution: this.state.institution,
+      pid: "5dd4bc43064a3a29e4887bb8",
+      pkey: "Dy8SP9LJAZcbfmQ3yi76ofhTagVvBuDz4swU5up5LxWm",
+      rid: this.props.auth.accId,
+      rkey: this.props.auth.acc_pkey
     };
 
     this.props.addPublication(publicationData, this.props.history);
@@ -78,11 +80,13 @@ class R_Form extends Component {
 }
 
 R_Form.propTypes = {
-  addPublication: PropTypes.func.isRequired
+  addPublication: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   // TODO: add researcher + patient state
+  auth: state.auth
 });
 
 export default connect(mapStateToProps, { addPublication })(R_Form);

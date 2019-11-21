@@ -15,19 +15,46 @@ class Header extends Component {
   };
 
   render() {
-    const { isAuthenticated } = this.props.auth;
-
+    const { isAuthenticated, type } = this.props.auth;
     const authLinks = (
       <Fragment>
-        <Nav.Link href="/researcher" className="pr-3 text-white">
-          Researcher
-        </Nav.Link>
-        <Nav.Link href="/patient" className="pr-3 text-white">
-          Patient
-        </Nav.Link>
-        <a href="" className="mr-5 btn btn-outline-light">
-          Log Out
-        </a>
+        {type === "RESEARCHER" ? (
+          <Fragment>
+            <Nav.Link href="/payment_dashboard" className="pr-3 text-white">
+              Payment Dashboard
+            </Nav.Link>
+
+            <Nav.Link href="/add_publication" className="pr-3 text-white">
+              Add Publication
+            </Nav.Link>
+
+            <Nav.Link href="/wallet" className="pr-3 text-white">
+              Wallet
+            </Nav.Link>
+            <Nav.Link href="/researcher" className="pr-3 text-white">
+              Researcher
+            </Nav.Link>
+            <a href="" className="mr-5 btn btn-outline-light">
+              Log Out
+            </a>
+          </Fragment>
+        ) : (
+          <Fragment>
+            <Nav.Link href="/payment_dashboard" className="pr-3 text-white">
+              Payment Dashboard
+            </Nav.Link>
+
+            <Nav.Link href="/wallet" className="pr-3 text-white">
+              Wallet
+            </Nav.Link>
+            <Nav.Link href="/patient" className="pr-3 text-white">
+              Patient
+            </Nav.Link>
+            <a href="" className="mr-5 btn btn-outline-light">
+              Log Out
+            </a>
+          </Fragment>
+        )}
       </Fragment>
     );
 
@@ -48,6 +75,9 @@ class Header extends Component {
             OpenMed
           </Navbar.Brand>
           <Nav className="ml-auto">
+            <Nav.Link href="/publication" className="pr-3 text-white">
+              Publications
+            </Nav.Link>
             {isAuthenticated ? authLinks : guestLinks}
           </Nav>
         </Navbar>
