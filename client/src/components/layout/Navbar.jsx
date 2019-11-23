@@ -1,9 +1,13 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+
+import head from "../img/headlogo.png";
 
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
+import NavDropdown from "react-bootstrap/NavDropdown";
 
 import { logoutUser, clearCurrentUser } from "../../actions/authActions";
 
@@ -20,7 +24,7 @@ class Header extends Component {
       <Fragment>
         {type === "RESEARCHER" ? (
           <Fragment>
-            <Nav.Link href="/payment_dashboard" className="pr-3 text-white">
+            {/*             <Nav.Link href="/payment_dashboard" className="pr-3 text-white">
               Payment Dashboard
             </Nav.Link>
 
@@ -30,54 +34,71 @@ class Header extends Component {
 
             <Nav.Link href="/wallet" className="pr-3 text-white">
               Wallet
-            </Nav.Link>
-            <Nav.Link href="/researcher" className="pr-3 text-white">
+            </Nav.Link> */}
+            <Link to="/profile" className="pr-3 pt-2 text-white">
               Researcher
-            </Nav.Link>
-            <a href="" className="mr-5 btn btn-outline-light">
+            </Link>
+            <Link
+              href="#"
+              onClick={this.onLogout.bind(this)}
+              className="mr-5 btn btn-outline-light"
+            >
               Log Out
-            </a>
+            </Link>
           </Fragment>
         ) : (
           <Fragment>
-            <Nav.Link href="/payment_dashboard" className="pr-3 text-white">
+            {/*             <Nav.Link href="/payment_dashboard" className="pr-3 text-white">
               Payment Dashboard
             </Nav.Link>
 
             <Nav.Link href="/wallet" className="pr-3 text-white">
               Wallet
-            </Nav.Link>
-            <Nav.Link href="/patient" className="pr-3 text-white">
+            </Nav.Link> */}
+            {/*             <Link to="/profile" className="pr-3 pt-2 text-white">
               Patient
-            </Nav.Link>
-            <a href="" className="mr-5 btn btn-outline-light">
-              Log Out
-            </a>
+            </Link> */}
+
+            <NavDropdown
+              title={`Hello, ${this.props.auth.user.firstName}`}
+              id="basic-nav-dropdown"
+              className="pr-5 ml-5 text-white"
+            >
+              <NavDropdown.Item href="/profile">View Profile</NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item
+                href="#action/3.4"
+                onClick={this.onLogout.bind(this)}
+              >
+                Logout
+              </NavDropdown.Item>
+            </NavDropdown>
           </Fragment>
         )}
       </Fragment>
     );
 
     const guestLinks = (
-      <a
-        href="/login"
-        onClick={this.onLogout.bind(this)}
-        className="mr-5 btn btn-outline-light"
-      >
+      <Link to="/login" className="mr-5 btn btn-outline-light">
         Login
-      </a>
+      </Link>
     );
 
     return (
       <Fragment>
-        <Navbar bg="primary" variant="dark" className="pb-3 pt-3">
-          <Navbar.Brand href="/" className="pl-5">
-            OpenMed
+        <Navbar variant="dark" className="pb-3 pt-3 grad">
+          <Navbar.Brand href="/" className="pl-5 ml-5">
+            <img
+              src={head}
+              width="150"
+              height="150"
+              className="d-inline-block align-top"
+            />
           </Navbar.Brand>
           <Nav className="ml-auto">
-            <Nav.Link href="/publication" className="pr-3 text-white">
+            {/* <Link to="/publication" className="pr-3 text-white">
               Publications
-            </Nav.Link>
+            </Link> */}
             {isAuthenticated ? authLinks : guestLinks}
           </Nav>
         </Navbar>
@@ -88,8 +109,8 @@ class Header extends Component {
 
 Navbar.propTypes = {
   auth: PropTypes.object.isRequired,
-  logoutUser: PropTypes.func.isRequired,
-  clearCurrentUser: PropTypes.func.isRequired
+  logoutUser: PropTypes.func,
+  clearCurrentUser: PropTypes.func
 };
 
 const mapStateToProps = state => ({

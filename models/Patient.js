@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const mongooseToCsv = require("mongoose-to-csv");
+const fs = require("fs");
 
 const PatientSchema = new Schema({
   patient: {
@@ -68,4 +70,19 @@ const PatientSchema = new Schema({
   }
 });
 
+PatientSchema.plugin(mongooseToCsv, {
+  headers: "Patient Data",
+  constraints: {
+    Firstname: "firstName",
+    Lastname: "lastName",
+    City: "city"
+  }
+});
+
 module.exports = Patient = mongoose.model("patient", PatientSchema);
+
+Patient.find({})
+  .exec()
+  .then(function(docs) {
+    Patient.csvReadStream(docs).pipe(fs.createWriteStream("p.csv"));
+  });

@@ -28,13 +28,13 @@ class RLogin extends Component {
 
   componentDidMount() {
     if (this.props.auth.isAuthenticated) {
-      this.props.history.push("/");
+      this.props.history.push("/researcher_profile");
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.auth.isAuthenticated) {
-      this.props.history.push("/");
+      this.props.history.push("/researcher_profile");
     }
   }
 

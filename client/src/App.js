@@ -13,9 +13,11 @@ import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import RLogin from "./components/auth/RLogin";
 import AddPublication from "./components/payments/R_Form";
-import Wallet from "./components/payments/Wallet";
+/* import Wallet from "./components/payments/Wallet";
 import PaymentDashboard from "./components/payments/PaymentDashboard";
-import Publications from "./components/publications/Publication";
+import Publications from "./components/publications/Publication"; */
+import Profile from "./components/dashboard/Profile";
+import RProfile from "./components/dashboard/RProfile";
 
 import "./App.css";
 
@@ -60,6 +62,8 @@ class App extends Component {
         <Router>
           <div className="App">
             <Navbar />
+            <Route exact path="/profile" component={Profile} />
+            <Route exact path="/researcher_profile" component={RProfile} />
             <div className="container">
               {/* 
                 Name
@@ -79,7 +83,7 @@ class App extends Component {
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/rlogin" component={RLogin} />
-              <Route exact path="/publication" component={Publications} />
+              {/* <Route exact path="/publication" component={Publications} /> */}
               <Switch>
                 <PrivateRoute
                   exact
@@ -87,7 +91,7 @@ class App extends Component {
                   component={AddPublication}
                 />
               </Switch>
-              <Switch>
+              {/*               <Switch>
                 <PrivateRoute
                   exact
                   path="/payment_dashboard"
@@ -96,7 +100,7 @@ class App extends Component {
               </Switch>
               <Switch>
                 <PrivateRoute exact path="/wallet" component={Wallet} />
-              </Switch>
+              </Switch> */}
             </div>
           </div>
         </Router>

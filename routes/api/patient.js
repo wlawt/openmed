@@ -117,8 +117,12 @@ router.post("/login", (req, res) => {
     @desc       Retrieve key
     @access     Private
 */
-router.get("/key", (req, res) => {
-  res.json({ msg: "patient key" });
+router.get("/key/:private_key", (req, res) => {
+  Patient.findOne({ private_key: req.params.private_key })
+    .then(patient => {
+      res.json(patient);
+    })
+    .catch(err => console.log(err));
 });
 
 /*  @route      POST api/patient/create_key

@@ -28,13 +28,13 @@ class Login extends Component {
 
   componentDidMount() {
     if (this.props.auth.isAuthenticated) {
-      this.props.history.push("/");
+      this.props.history.push("/profile");
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.auth.isAuthenticated) {
-      this.props.history.push("/");
+      this.props.history.push("/profile");
     }
   }
 
@@ -96,7 +96,7 @@ class Login extends Component {
         </Link>
         <br />
         <Link to="/rlogin" className="lead" style={{ textDecoration: "none" }}>
-          Not a patient? Login as a pesearcher.
+          Not a patient? Login as a researcher.
         </Link>
       </Fragment>
     );

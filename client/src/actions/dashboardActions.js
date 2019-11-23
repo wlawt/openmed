@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_PATIENTS } from "./types";
+import { GET_PATIENTS, DOWNLOAD } from "./types";
 
 export const getPatients = () => dispatch => {
   axios
@@ -13,6 +13,23 @@ export const getPatients = () => dispatch => {
     .catch(err =>
       dispatch({
         type: GET_PATIENTS,
+        payload: null
+      })
+    );
+};
+
+export const downloadFile = () => dispatch => {
+  axios
+    .get("/api/researcher/download")
+    .then(res =>
+      dispatch({
+        type: DOWNLOAD,
+        payload: ""
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: DOWNLOAD,
         payload: null
       })
     );

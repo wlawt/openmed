@@ -1,6 +1,14 @@
 const express = require("express");
 const router = express.Router();
 const driver = require("bigchaindb-driver");
+const jwt = require("jsonwebtoken");
+const passport = require("passport");
+const keys = require("../../config/keys");
+const writeJsonFile = require("write-json-file");
+const fs = require("fs");
+const path = require("path");
+const shell = require("shelljs");
+const { exec } = require("child_process");
 
 // LOAD MODEL
 const Researcher = require("../../models/Researcher");
@@ -109,6 +117,42 @@ router.post("/login", (req, res) => {
       console.log("dont match");
     }
   });
+});
+
+var currentPath = process.cwd();
+router.get("/download", (req, res, next) => {
+  Researcher.find()
+    .then(researcher => {
+      try {
+        /*         const data = fs.writeFileSync(
+          "D:\\Coding Folder\\CES\\OpenMed\\routes\\api\\file.txt",
+          JSON.stringify(researcher)
+        );
+
+        console.log(currentPath); */
+
+        /* const data = fs.createReadStream("file.txt");
+        res.writeHead(200, {
+          "Content-disposition": "attachment; filename=file.txt"
+        });
+        data.pipe(res); */
+
+        exec(
+          "mongoexport --db test --collection patients --type=csv --fields firstName, lastName, study",
+          function(code, stdout, stderr) {
+            console.log("Exit code:", code);
+            console.log("Program output:", stdout);
+            console.log("Program stderr:", stderr);
+          }
+        );
+
+        //res.download(data);
+      } catch (e) {
+        console.error(e);
+      }
+    })
+    .catch(err => console.log(err));
+  next();
 });
 
 router.get("/all", (req, res) => {

@@ -38,7 +38,7 @@ export const loginPatient = loginData => dispatch => {
 // Login - Get researcher token
 export const loginResearcher = loginData => dispatch => {
   axios
-    .post("/api/register/login", loginData)
+    .post("/api/researcher/login", loginData)
     .then(res => {
       // Save to localStorage
       const { token } = res.data;
@@ -54,7 +54,7 @@ export const loginResearcher = loginData => dispatch => {
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
-        payload: err.response.data
+        payload: ""
       })
     );
 };

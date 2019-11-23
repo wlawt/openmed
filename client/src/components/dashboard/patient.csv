@@ -1,0 +1,99 @@
+        <Row>
+          <Col>
+            <Link
+              to="#"
+              className="btn btn-primary p-5"
+              style={{ borderRadius: 20 }}
+            >
+              <Image src={add} width="30%" height="30%" />
+              <p className="lead text-white">Add Medical Data</p>
+            </Link>
+          </Col>
+          <Col>
+            <Link
+              to="#"
+              className="btn btn-primary p-5"
+              style={{ borderRadius: 20 }}
+            >
+              <Image src={add} width="30%" height="30%" />
+              <p className="lead text-white">Add Medical Data</p>
+            </Link>
+          </Col>
+          <Col>
+            <Link
+              to="#"
+              className="btn btn-primary p-5"
+              style={{ borderRadius: 20 }}
+            >
+              <Image src={add} width="30%" height="30%" />
+              <p className="lead text-white">Add Medical Data</p>
+            </Link>
+          </Col>
+        </Row>
+
+
+
+
+
+
+
+
+
+
+
+
+
+        {" "}
+            <Row>
+              <Col xs={6} md={4}>
+                <Image src={pfp} roundedCircle />
+              </Col>
+              <Col xs={12} md={8}>
+                <h4 className="font-weight-bold pt-4 mt-4">
+                  Greetings, {auth.user.firstName}!
+                </h4>
+
+                <p className="lead">
+                  Account ID:{" "}
+                  <Link to="#" onClick={this.onShowID.bind(this)}>
+                    {showid}
+                  </Link>
+                </p>
+
+                <p className="lead">
+                  Public Key:{" "}
+                  <Link to="#" onClick={this.onShowPublic.bind(this)}>
+                    {showpublic}
+                  </Link>
+                </p>
+
+                <p className="lead">
+                  Private Key:{" "}
+                  <Link to="#" onClick={this.onShowPrivate.bind(this)}>
+                    {showprivate}
+                  </Link>
+                </p>
+              </Col>
+            </Row>
+            <h3 className="font-weight-bold" style={{ float: "left" }}>
+              Data Contribution
+            </h3>
+            <h3 style={{ float: "right" }}>
+              <i class="fas fa-plus-square text-primary"></i>
+            </h3>
+            <Table striped bordered hover responsive>
+              <thead>
+                <tr>
+                  <th scope="col">Date</th>
+                  <th scope="col">ID</th>
+                  <th scope="col">First Name</th>
+                  <th scope="col">Last Name</th>
+                  <th scope="col">City</th>
+                  <th scope="col">State</th>
+                  <th scope="col">Country</th>
+                  <th scope="col">Public Key</th>
+                  <th scope="col">Fulfillment</th>
+                </tr>
+              </thead>
+              <tbody>{patientDashboard}</tbody>
+            </Table>

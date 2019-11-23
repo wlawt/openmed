@@ -8,3 +8,5 @@ export const SET_PKEY = "SET_PKEY";
 export const SET_TYPE = "SET_TYPE";
 export const GET_PAYMENTS = "GET_PAYMENTS";
 export const GET_PUBLICATIONS = "GET_PUBLICATIONS";
+export const GET_PUBLIC = "GET_PUBLIC";
+export const DOWNLOAD = "DOWNLOAD";
